@@ -1,0 +1,1 @@
+D:\CppProject\Game_Gomoku\x64\Debug\Game_Gomoku.exe

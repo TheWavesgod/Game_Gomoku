@@ -1,0 +1,12 @@
+﻿  AI.cpp
+  ChessBoard.cpp
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(54,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(56,26): warning C4018: “<”: 有符号/无符号不匹配
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(72,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(75,26): warning C4018: “<”: 有符号/无符号不匹配
+  GameMode.cpp
+  Player.cpp
+  main.cpp
+D:\CppProject\Game_Gomoku\main.cpp(9,42): warning C4305: “参数”: 从“double”到“float”截断
+  正在生成代码...
+  Game_Gomoku.vcxproj -> D:\CppProject\Game_Gomoku\x64\Debug\Game_Gomoku.exe

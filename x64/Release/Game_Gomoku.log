@@ -1,0 +1,29 @@
+﻿  AI.cpp
+  ChessBoard.cpp
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(11,2): error C2665: “loadimage”: 没有重载函数可以转换所有参数类型
+C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\VS\include\easyx.h(258,6): message : 可能是“void loadimage(IMAGE *,LPCTSTR,int,int,bool)”
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(11,2): message : “void loadimage(IMAGE *,LPCTSTR,int,int,bool)”: 无法将参数 2 从“const char [24]”转换为“LPCTSTR”
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(11,15): message : 指向的类型不相关; 转换需要 reinterpret_cast、C 样式强制转换或带圆括号的函数样式强制转换
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(11,2): message : 尝试匹配参数列表“(int, const char [24])”时
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(13,2): error C2664: “MCIERROR mciSendStringW(LPCWSTR,LPWSTR,UINT,HWND)”: 无法将参数 1 从“const char [22]”转换为“LPCWSTR”
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(13,16): message : 指向的类型不相关; 转换需要 reinterpret_cast、C 样式强制转换或带圆括号的函数样式强制转换
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um\mciapi.h(87,1): message : 参见“mciSendStringW”的声明
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(13,2): message : 尝试匹配参数列表“(const char [22], int, int, int)”时
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(15,2): error C2665: “loadimage”: 没有重载函数可以转换所有参数类型
+C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\VS\include\easyx.h(258,6): message : 可能是“void loadimage(IMAGE *,LPCTSTR,int,int,bool)”
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(15,2): message : “void loadimage(IMAGE *,LPCTSTR,int,int,bool)”: 无法将参数 2 从“const char [19]”转换为“LPCTSTR”
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(15,28): message : 指向的类型不相关; 转换需要 reinterpret_cast、C 样式强制转换或带圆括号的函数样式强制转换
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(15,2): message : 尝试匹配参数列表“(IMAGE *, const char [19])”时
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(16,2): error C2665: “loadimage”: 没有重载函数可以转换所有参数类型
+C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Auxiliary\VS\include\easyx.h(258,6): message : 可能是“void loadimage(IMAGE *,LPCTSTR,int,int,bool)”
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(16,2): message : “void loadimage(IMAGE *,LPCTSTR,int,int,bool)”: 无法将参数 2 从“const char [19]”转换为“LPCTSTR”
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(16,28): message : 指向的类型不相关; 转换需要 reinterpret_cast、C 样式强制转换或带圆括号的函数样式强制转换
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(16,2): message : 尝试匹配参数列表“(IMAGE *, const char [19])”时
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(54,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(56,26): warning C4018: “<”: 有符号/无符号不匹配
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(72,25): warning C4018: “<”: 有符号/无符号不匹配
+D:\CppProject\Game_Gomoku\ChessBoard.cpp(75,26): warning C4018: “<”: 有符号/无符号不匹配
+  GameMode.cpp
+  Player.cpp
+  main.cpp
+D:\CppProject\Game_Gomoku\main.cpp(9,42): warning C4305: “参数”: 从“double”到“float”截断
