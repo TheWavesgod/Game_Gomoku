@@ -5,6 +5,8 @@ GameMode::GameMode(Player* C_player, AI* C_ai, ChessBoard* C_chessBoard)
 	this->player = C_player;
 	this->ai = C_ai;
 	this->chessBoard = C_chessBoard;
+
+	this->player->init(chessBoard);
 }
 
 

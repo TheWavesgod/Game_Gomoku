@@ -8,5 +8,8 @@ public:
 	void init(ChessBoard* board);
 
 	void go();
+
+private:
+	ChessBoard* board;
 };
 

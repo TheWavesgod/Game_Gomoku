@@ -11,6 +11,12 @@ struct chessPos
 	int col;
 };
 
+struct PixCdnt
+{
+	int x;
+	int y;
+};
+
 typedef enum
 {
 	CHESS_WHITE = -1,
@@ -38,6 +44,9 @@ public:
 	bool checkOver();
 
 	void chessBoardClear();
+
+	PixCdnt getPixCdnt(chessPos* pos);
+	PixCdnt getPixCdnt(int row, int col);
 
 public:
 	ChessBoard(int gradeSize, int marginX, int marginY, float chessSize);
