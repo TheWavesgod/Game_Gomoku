@@ -15,6 +15,8 @@ private:
 	vector<vector<int>> scoreMap;
 
 private:
+	chessPos AIThink();
+
 	void findBestMove(int& bestRow, int& bestCol);
 
 	void clearScoreMap();

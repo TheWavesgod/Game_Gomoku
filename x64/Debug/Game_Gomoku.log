@@ -1,25 +1,2 @@
-﻿  AI.cpp
-D:\CppProject\Game_Gomoku\AI.cpp(7,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\AI.cpp(10,26): warning C4018: “<”: 有符号/无符号不匹配
-  ChessBoard.cpp
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(26,13): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(27,13): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(29,13): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(37,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(49,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(61,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(73,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(128,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(130,26): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(141,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(142,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(151,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(152,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(171,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(174,26): warning C4018: “<”: 有符号/无符号不匹配
-  GameMode.cpp
-  Player.cpp
-  main.cpp
-D:\CppProject\Game_Gomoku\main.cpp(9,42): warning C4305: “参数”: 从“double”到“float”截断
-  正在生成代码...
+﻿  GameMode.cpp
   Game_Gomoku.vcxproj -> D:\CppProject\Game_Gomoku\x64\Debug\Game_Gomoku.exe

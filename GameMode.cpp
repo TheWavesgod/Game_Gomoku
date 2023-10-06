@@ -14,6 +14,8 @@ void GameMode::play()
 {
 	chessBoard->init_ChessBoard();
 
+	player->init(this->chessBoard);
+	ai->init(this->chessBoard);
 
 	while (1)
 	{

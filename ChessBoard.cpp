@@ -105,7 +105,7 @@ void ChessBoard::chessMove(chessPos* pos, chess_kind_t chess_kind)
 
 int ChessBoard::getGradeSize()
 {
-	return this->gradeSize;
+	return gradeSize;
 }
 
 int ChessBoard::getChessData(chessPos* pos)
