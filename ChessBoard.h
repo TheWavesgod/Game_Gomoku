@@ -23,6 +23,12 @@ typedef enum
 	CHESS_BLACK = 1
 }chess_kind_t;
 
+typedef enum
+{
+	CHESS_DOWN = 1,
+	CHESS_REMOVE = 0
+}chess_move_t;
+
 class ChessBoard
 {
 public:
@@ -45,9 +51,6 @@ public:
 
 	void chessBoardClear();
 
-	PixCdnt getPixCdnt(chessPos* pos);
-	PixCdnt getPixCdnt(int row, int col);
-
 public:
 	ChessBoard(int gradeSize, int marginX, int marginY, float chessSize);
 
@@ -68,5 +71,12 @@ private:
 	// Indicate who the chess player is now. true reps black, false reps white.
 	bool playerFlag;
 
+private:
+	void putChessImagePNG(int x, int y, IMAGE* picture);
+
+	PixCdnt getPixCdnt(chessPos* pos);
+	PixCdnt getPixCdnt(int row, int col);
+
+	void updateChessMap(chessPos* pos, chess_kind_t chess_kind,chess_move_t move_t);
 };
 

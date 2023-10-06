@@ -9,12 +9,12 @@ void ChessBoard::init_ChessBoard()
 {
 	initgraph(720, 755, EX_SHOWCONSOLE);
 
-	loadimage(0, "Resouces/chessboard.png");
+	loadimage(0, "Resources/chessboard.png");
 
-	mciSendString("play Resouces/chq.mp3", 0, 0, 0);
+	mciSendString("play Resources/chq.mp3", 0, 0, 0);
 
-	loadimage(&chessBlackImg, "Resouces/black.png");
-	loadimage(&chessWhiteImg, "Resouces/white.png");
+	loadimage(&chessBlackImg, "Resources/black.png", 44, 44, true);
+	loadimage(&chessWhiteImg, "Resources/white.png", 44, 44, true);
 
 	chessBoardClear();
 
@@ -86,21 +86,36 @@ bool ChessBoard::clickBoard(int x, int y, chessPos* pos)
 
 void ChessBoard::chessMove(chessPos* pos, chess_kind_t chess_kind)
 {
+	PixCdnt Ppos = getPixCdnt(pos);
+
+	int offset = 22;
+
+	if (chess_kind == CHESS_WHITE)
+	{
+		putChessImagePNG(Ppos.x - offset, Ppos.y - offset, &chessWhiteImg);
+	}
+	else
+	{
+		putChessImagePNG(Ppos.x - offset, Ppos.y - offset, &chessBlackImg);
+	}
+
+	updateChessMap(pos, chess_kind, CHESS_DOWN);
+
 }
 
 int ChessBoard::getGradeSize()
 {
-	return 0;
+	return this->gradeSize;
 }
 
 int ChessBoard::getChessData(chessPos* pos)
 {
-	return 0;
+	return this->chessMap[pos->row][pos->col];
 }
 
 int ChessBoard::getChessData(int row, int col)
 {
-	return 0;
+	return this->chessMap[row][col];
 }
 
 bool ChessBoard::checkOver()
@@ -139,6 +154,11 @@ PixCdnt ChessBoard::getPixCdnt(int row, int col)
 	return temp;
 }
 
+void ChessBoard::updateChessMap(chessPos* pos, chess_kind_t chess_kind, chess_move_t move_t)
+{
+	chessMap[pos->row][pos->col] = move_t ? chess_kind : 0;
+}
+
 ChessBoard::ChessBoard(int gradeSize, int marginX, int marginY, float chessSize)
 {
 	this->gradeSize = gradeSize;
@@ -156,5 +176,41 @@ ChessBoard::ChessBoard(int gradeSize, int marginX, int marginY, float chessSize)
 			temp.push_back(0);
 		}
 		this->chessMap.push_back(temp);
+	}
+}
+
+void ChessBoard::putChessImagePNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标
+{
+	// 变量初始化
+	DWORD* dst = GetImageBuffer();    // GetImageBuffer()函数，用于获取绘图设备的显存指针，EASYX自带
+	DWORD* draw = GetImageBuffer();
+	DWORD* src = GetImageBuffer(picture); //获取picture的显存指针
+	int picture_width = picture->getwidth(); //获取picture的宽度，EASYX自带
+	int picture_height = picture->getheight(); //获取picture的高度，EASYX自带
+	int graphWidth = getwidth();       //获取绘图区的宽度，EASYX自带
+	int graphHeight = getheight();     //获取绘图区的高度，EASYX自带
+	int dstX = 0;    //在显存里像素的角标
+
+	// 实现透明贴图 公式： Cp=αp*FP+(1-αp)*BP ， 贝叶斯定理来进行点颜色的概率计算
+	for (int iy = 0; iy < picture_height; iy++)
+	{
+		for (int ix = 0; ix < picture_width; ix++)
+		{
+			int srcX = ix + iy * picture_width; //在显存里像素的角标
+			int sa = ((src[srcX] & 0xff000000) >> 24); //0xAArrggbb;AA是透明度
+			int sr = ((src[srcX] & 0xff0000) >> 16); //获取RGB里的R
+			int sg = ((src[srcX] & 0xff00) >> 8);   //G
+			int sb = src[srcX] & 0xff;              //B
+			if (ix >= 0 && ix <= graphWidth && iy >= 0 && iy <= graphHeight && dstX <= graphWidth * graphHeight)
+			{
+				dstX = (ix + x) + (iy + y) * graphWidth; //在显存里像素的角标
+				int dr = ((dst[dstX] & 0xff0000) >> 16);
+				int dg = ((dst[dstX] & 0xff00) >> 8);
+				int db = dst[dstX] & 0xff;
+				draw[dstX] = ((sr * sa / 255 + dr * (255 - sa) / 255) << 16)  //公式： Cp=αp*FP+(1-αp)*BP  ； αp=sa/255 , FP=sr , BP=dr
+					| ((sg * sa / 255 + dg * (255 - sa) / 255) << 8)         //αp=sa/255 , FP=sg , BP=dg
+					| (sb * sa / 255 + db * (255 - sa) / 255);              //αp=sa/255 , FP=sb , BP=db
+			}
+		}
 	}
 }
