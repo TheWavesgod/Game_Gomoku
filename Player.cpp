@@ -5,9 +5,10 @@
 void Player::init(ChessBoard* board)
 {
 	this->board = board;
+	playerChess = board->getPlayerChessKind();
 }
 
-void Player::go()
+chessPos Player::go()
 {
 	MOUSEMSG msg;
 	chessPos pos;
@@ -17,13 +18,13 @@ void Player::go()
 		msg = GetMouseMsg();
 		if (msg.uMsg == WM_LBUTTONDOWN && board->clickBoard(msg.x, msg.y, &pos))
 		{
-
 			break;
 		}
 	}
 
-	cout << pos.row << " " << pos.col << " " << endl;
+	//cout << pos.row << " " << pos.col << " " << endl;
 
-	board->chessMove(&pos, CHESS_BLACK);
+	board->chessMove(&pos, playerChess);
 
+	return pos;
 }

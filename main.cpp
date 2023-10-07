@@ -10,7 +10,7 @@ int main(void)
 
 	GameMode game(&player, &ai, &chessBoard);
 
-	game.play();
+	game.mainMenu();
 
 	return 0;
 }

@@ -33,7 +33,7 @@ class ChessBoard
 {
 public:
 
-	void init_ChessBoard();
+	void init_ChessBoard(bool playerFlag);
 
 	// Check if the click is valid.
 	// If valid, save the info into position of chessPos.
@@ -47,9 +47,11 @@ public:
 	int getChessData(chessPos* pos);
 	int getChessData(int row, int col);
 	  
-	bool checkOver();
+	bool checkOver(chessPos lastMovePos, chess_kind_t lastMoveKind);
 
 	void chessBoardClear();
+
+	chess_kind_t getPlayerChessKind();
 
 public:
 	ChessBoard(int gradeSize, int marginX, int marginY, float chessSize);

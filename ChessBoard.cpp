@@ -5,10 +5,9 @@
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 
-void ChessBoard::init_ChessBoard()
+void ChessBoard::init_ChessBoard(bool playerFlag)
 {
-	initgraph(720, 755, EX_SHOWCONSOLE);
-
+	Resize(NULL, 720, 755);
 	loadimage(0, "Resources/chessboard.png");
 
 	mciSendString("play Resources/chq.mp3", 0, 0, 0);
@@ -18,7 +17,7 @@ void ChessBoard::init_ChessBoard()
 
 	chessBoardClear();
 
-	playerFlag = true;
+	this->playerFlag = playerFlag;
 }
 
 bool ChessBoard::clickBoard(int x, int y, chessPos* pos)
@@ -99,6 +98,8 @@ void ChessBoard::chessMove(chessPos* pos, chess_kind_t chess_kind)
 		putChessImagePNG(Ppos.x - offset, Ppos.y - offset, &chessBlackImg);
 	}
 
+	mciSendString("play Resources/chess.wav", 0, 0, 0);
+
 	updateChessMap(pos, chess_kind, CHESS_DOWN);
 
 }
@@ -118,8 +119,96 @@ int ChessBoard::getChessData(int row, int col)
 	return this->chessMap[row][col];
 }
 
-bool ChessBoard::checkOver()
+bool ChessBoard::checkOver(chessPos lastMovePos, chess_kind_t lastMoveKind)
 {
+	int row = lastMovePos.row;
+	int col = lastMovePos.col;
+
+	int countNum = 0;
+
+	// Horizontal check
+	for (int i = col - 4; i <= col + 4; ++i)
+	{	
+		if (i >= 0 && i < gradeSize)
+		{
+			if (chessMap[row][i] == lastMoveKind)
+			{
+				++countNum;
+			}
+			else
+			{
+				countNum = 0;
+			}
+		}
+	}
+	if (countNum == 5) 
+	{
+		return true;
+	}
+
+	// Vertical check
+	countNum = 0;
+	for (int i = row - 4; i <= row + 4; ++i)
+	{
+		if (i >= 0 && i < gradeSize)
+		{
+			if (chessMap[i][col] == lastMoveKind)
+			{
+				++countNum;
+			}
+			else
+			{
+				countNum = 0;
+			}
+		}
+		if (countNum == 5)
+		{
+			return true;
+		}
+	}
+
+	// left Diagonal check
+	countNum = 0;
+	for (int i = row - 4, j = col - 4; i <= row + 4; ++i, ++j)
+	{
+		if (i >= 0 && i < gradeSize && j >= 0 && j < gradeSize)
+		{
+			if (chessMap[i][j] == lastMoveKind)
+			{
+				++countNum;
+			}
+			else
+			{
+				countNum = 0;
+			}
+		}
+		if (countNum == 5)
+		{
+			return true;
+		}
+	}
+
+	// right Diagonal check
+	countNum = 0;
+	for (int i = row - 4, j = col + 4; i <= row + 4; ++i, --j)
+	{
+		if (i >= 0 && i < gradeSize && j >= 0 && j < gradeSize)
+		{
+			if (chessMap[i][j] == lastMoveKind)
+			{
+				++countNum;
+			}
+			else
+			{
+				countNum = 0;
+			}
+		}
+		if (countNum == 5)
+		{
+			return true;
+		}
+	}
+
 	return false;
 }
 
@@ -132,6 +221,11 @@ void ChessBoard::chessBoardClear()
 			this->chessMap[i][j] = 0;
 		}
 	}
+}
+
+chess_kind_t ChessBoard::getPlayerChessKind()
+{
+	return this->playerFlag? CHESS_BLACK : CHESS_WHITE;
 }
 
 PixCdnt ChessBoard::getPixCdnt(chessPos* pos)

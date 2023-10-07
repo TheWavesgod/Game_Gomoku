@@ -13,16 +13,20 @@ void AI::init(ChessBoard* board)
 		}
 		this->scoreMap.push_back(temp);
 	}
+
+	AIChess = board->getPlayerChessKind() == CHESS_BLACK ? CHESS_WHITE : CHESS_BLACK;
 }
 
-void AI::go()
+chessPos AI::go()
 {
 	chessPos movePos = AIThink();
 
 	// pretend to be thinking
 	Sleep(1000);
 
-	board->chessMove(&movePos, CHESS_WHITE);
+	board->chessMove(&movePos, AIChess);
+
+	return movePos;
 }
 
 chessPos AI::AIThink()
@@ -51,7 +55,7 @@ void AI::findBestMove(int& bestRow, int& bestCol)
 		{
 			if (board->getChessData(row, col) == 0)
 			{
-				int score = evaluateMove(row, col, CHESS_WHITE);
+				int score = evaluateMove(row, col, AIChess);
 				if (score > maxScore)
 				{
 					maxScore = score;
@@ -81,14 +85,14 @@ int AI::evaluateMove(int row, int col, chess_kind_t ai_chess_kind)
 	// Horizontal direction
 	for (int i = col - 4; i < col; ++i)
 	{
-		if (i >= 0 && i + 4 <= board->getGradeSize())
+		if (i >= 0 && i + 4 < board->getGradeSize())
 		{
 			int countAI = 0;
 			int countOpponent = 0;
 
 			for (int j = i; j < i + 5; ++j)
 			{
-				if (board->getChessData(row, j) == ai_chess_kind)
+ 				if (board->getChessData(row, j) == ai_chess_kind)
 				{
 					++countAI;
 				}
@@ -105,7 +109,7 @@ int AI::evaluateMove(int row, int col, chess_kind_t ai_chess_kind)
 	// Vertical direction
 	for (int i = row - 4; i < row; ++i)
 	{
-		if (i >= 0 && i + 4 <= board->getGradeSize())
+		if (i >= 0 && i + 4 < board->getGradeSize())
 		{
 			int countAI = 0;
 			int countOpponent = 0;
@@ -129,7 +133,7 @@ int AI::evaluateMove(int row, int col, chess_kind_t ai_chess_kind)
 	// Diagonal direction 
 	for (int i = 4; i > 0; --i)
 	{
-		if (row - i >= 0 && col - i >= 0 && row - i + 4 <= board->getGradeSize() && col - i + 4 <= board->getGradeSize())
+		if (row - i >= 0 && col - i >= 0 && row - i + 4 < board->getGradeSize() && col - i + 4 < board->getGradeSize())
 		{
 			int countAI = 0;
 			int countOpponent = 0;

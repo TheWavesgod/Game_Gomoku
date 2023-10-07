@@ -7,9 +7,10 @@ class Player
 public:
 	void init(ChessBoard* board);
 
-	void go();
+	chessPos go();
 
 private:
 	ChessBoard* board;
+	chess_kind_t playerChess;
 };
 

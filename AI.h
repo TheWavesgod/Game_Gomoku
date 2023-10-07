@@ -7,12 +7,14 @@ class AI
 public:
 	void init(ChessBoard *board);
 
-	void go();
+	chessPos go();
 
 private:
 	ChessBoard* board;
 
 	vector<vector<int>> scoreMap;
+
+	chess_kind_t AIChess = CHESS_WHITE;
 
 private:
 	chessPos AIThink();
