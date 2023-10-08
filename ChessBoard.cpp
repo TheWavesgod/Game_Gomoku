@@ -5,12 +5,32 @@
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 
+ChessBoard::ChessBoard(int gradeSize, int marginX, int marginY, float chessSize)
+{
+	this->gradeSize = gradeSize;
+	this->margin_x = marginX;
+	this->margin_y = marginY;
+	this->chessSize = chessSize;
+
+	playerFlag = true;
+
+	for (unsigned i = 0; i < gradeSize; ++i)
+	{
+		vector<int> temp;
+		for (unsigned j = 0; j < gradeSize; ++j)
+		{
+			temp.push_back(0);
+		}
+		this->chessMap.push_back(temp);
+	}
+}
+
 void ChessBoard::init_ChessBoard(bool playerFlag)
 {
-	Resize(NULL, 720, 755);
+	Resize(NULL, 1024, 1024);
 	loadimage(0, "Resources/chessboard.png");
 
-	mciSendString("play Resources/chq.mp3", 0, 0, 0);
+	//mciSendString("play Resources/chq.mp3", 0, 0, 0);
 
 	loadimage(&chessBlackImg, "Resources/black.png", 44, 44, true);
 	loadimage(&chessWhiteImg, "Resources/white.png", 44, 44, true);
@@ -251,26 +271,6 @@ PixCdnt ChessBoard::getPixCdnt(int row, int col)
 void ChessBoard::updateChessMap(chessPos* pos, chess_kind_t chess_kind, chess_move_t move_t)
 {
 	chessMap[pos->row][pos->col] = move_t ? chess_kind : 0;
-}
-
-ChessBoard::ChessBoard(int gradeSize, int marginX, int marginY, float chessSize)
-{
-	this->gradeSize = gradeSize;
-	this->margin_x = marginX;
-	this->margin_y = marginY;
-	this->chessSize = chessSize;
-
-	playerFlag = true; 
-
-	for (unsigned i = 0; i < gradeSize; ++i)
-	{
-		vector<int> temp;
-		for (unsigned j = 0; j < gradeSize; ++j)
-		{
-			temp.push_back(0);
-		}
-		this->chessMap.push_back(temp);
-	}
 }
 
 void ChessBoard::putChessImagePNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标

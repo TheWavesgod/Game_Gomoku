@@ -57,7 +57,6 @@ public:
 	ChessBoard(int gradeSize, int marginX, int marginY, float chessSize);
 
 private:
-
 	IMAGE chessBlackImg;
 	IMAGE chessWhiteImg;
 
