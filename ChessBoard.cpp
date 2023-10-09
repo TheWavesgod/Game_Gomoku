@@ -28,7 +28,7 @@ ChessBoard::ChessBoard(int gradeSize, int marginX, int marginY, float chessSize)
 void ChessBoard::init_ChessBoard(bool playerFlag)
 {
 	Resize(NULL, 1024, 1024);
-	loadimage(0, "Resources/chessboard.png");
+	loadimage(NULL, "Resources/chessboard.png",1024,1024,true);
 
 	//mciSendString("play Resources/chq.mp3", 0, 0, 0);
 

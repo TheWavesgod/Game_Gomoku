@@ -35,7 +35,7 @@ void AI::findBestMove(int& bestRow, int& bestCol)
 	bestRow = -1;
 	bestCol = -1;
 
-	int size = board->getGradeSize();
+		int size = board->getGradeSize();
 
 	for (unsigned row = 0; row < size; ++row)
 	{
@@ -81,7 +81,8 @@ int AI::evaluateMove(int row, int col, chess_kind_t ai_chess_kind)
 
 inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 {
-	int oppocount = 0;
+	int oppocount1 = 0;
+	int oppocount2 = 0;
 	int count = 0;
 	int left = 0;
 	int right = 0;
@@ -93,6 +94,10 @@ inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		const int& temp = board->getChessData(row, i);
 		if (temp == ai_chess_kind)
 		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
 			++count;
 			if (count >= 4)
 			{
@@ -101,6 +106,10 @@ inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
 			++left;
 			break;
 		}
@@ -108,7 +117,7 @@ inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		{
 			if (count == 0)
 			{
-				++oppocount;
+				++oppocount1;
 			}
 			else
 			{
@@ -122,6 +131,10 @@ inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		const int& temp = board->getChessData(row, i);
 		if (temp == ai_chess_kind)
 		{
+			if (oppocount2 != 0)
+			{
+				break;
+			}
 			++count;
 			if (count >= 4)
 			{
@@ -130,6 +143,10 @@ inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
+			if (oppocount2 != 0)
+			{
+				break;
+			}
 			++right;
 			break;
 		}
@@ -137,7 +154,7 @@ inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		{
 			if (count == 0)
 			{
-				++oppocount;
+				++oppocount2;
 			}
 			else
 			{
@@ -146,7 +163,7 @@ inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		}
 	}
 
-	return calculateScore(oppocount, count, left, right);
+	return calculateScore(oppocount1 + oppocount2, count, left, right);
 }
 
 int AI::verticalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
@@ -176,6 +193,10 @@ int AI::verticalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
 			++left;
 			break;
 		}
@@ -209,6 +230,10 @@ int AI::verticalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
+			if (oppocount2 != 0)
+			{
+				break;
+			}
 			++right;
 			break;
 		}
@@ -257,6 +282,10 @@ int AI::diagonalEvaluateFrwd(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
 			++left;
 			break;
 		}
@@ -296,7 +325,11 @@ int AI::diagonalEvaluateFrwd(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
-			++left;
+			if (oppocount2 != 0)
+			{
+				break;
+			}
+			++right;
 			break;
 		}
 		else
@@ -347,6 +380,10 @@ int AI::diagonalEvaluateBkwd(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
 			++left;
 			break;
 		}
@@ -386,7 +423,11 @@ int AI::diagonalEvaluateBkwd(int row, int col, chess_kind_t ai_chess_kind)
 		}
 		else if (temp == 0)
 		{
-			++left;
+			if (oppocount2 != 0)
+			{
+				break;
+			}
+			++right;
 			break;
 		}
 		else
@@ -425,7 +466,7 @@ int AI::calculateScore(int oppocount, int count, int left, int right)
 		}
 	}
 
-	int temp = tenNpower(oppocount) - 1;
+	int temp = tenNpower(oppocount+1);
 	score = temp > score ? temp : score;
 
 	return score;
