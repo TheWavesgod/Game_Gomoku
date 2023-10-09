@@ -29,10 +29,15 @@ private:
 	IMAGE startGameMagImg;
 	IMAGE gameOverMagImg;
 
+	IMAGE GameWinImg;
+	IMAGE GameLoseImg;
+
 	// Indicate what chess kind player choose. true reps black, false reps white.
 	bool playerFlag;
 	// Indicate who the chess player is now. true reps player, false reps ai.
 	bool flag;
+
+	void initMainMenu();
 
 	void checkWin();
 

@@ -14,9 +14,8 @@ GameMode::GameMode(Player* C_player, AI* C_ai, ChessBoard* C_chessBoard)
 	this->chessBoard = C_chessBoard;
 
 	this->player->init(chessBoard);
+	this->ai->init(chessBoard);
 
-	initgraph(1024, 1024);
-	loadimage(NULL, "Resources/MainMenu.png", 1024, 1024, true);
 	loadimage(&mainMenuImg, "Resources/MainMenu.png", 1024, 1024, true);
 
 	float k = 0.38;
@@ -27,8 +26,8 @@ GameMode::GameMode(Player* C_player, AI* C_ai, ChessBoard* C_chessBoard)
 	loadimage(&startGameMagImg, "Resources/startgame.png", j * 902, j * 320);
 	loadimage(&gameOverMagImg, "Resources/gameover.png", j * 902, j * 320);
 
-	putImagePNG(70, 550, &startGameImg);
-	putImagePNG(70, 750, &gameOverImg);
+	loadimage(&GameWinImg,"Resources/success.png" );
+	loadimage(&GameLoseImg, "Resources/fail.png");
 
 	// background music
 	mciSendString("play Resources/bgm.mp3 repeat", 0, 0, 0);
@@ -37,6 +36,8 @@ GameMode::GameMode(Player* C_player, AI* C_ai, ChessBoard* C_chessBoard)
 
 int GameMode::mainMenu()
 {
+	initMainMenu();
+
 	MOUSEMSG msg;
 	bool startGameFlag = true;
 	bool gameOverFlag = true;
@@ -69,16 +70,26 @@ int GameMode::mainMenu()
 
 }
 
+void GameMode::initMainMenu()
+{
+	initgraph(1024, 1024);
+
+	putimage(0, 0, &mainMenuImg);
+	putImagePNG(70, 550, &startGameImg);
+	putImagePNG(70, 750, &gameOverImg);
+}
+
 void GameMode::checkWin()
 {
 	if (flag == true)
 	{
 		mciSendString("play Resources/success.mp3", 0, 0 ,0);
-		// put image
+		putImagePNG(230, 230, &GameWinImg);
 	}
 	else
 	{
 		mciSendString("play Resources/lose.mp3", 0, 0, 0);
+		putImagePNG(230, 230, &GameLoseImg);
 	}
 }
 
@@ -239,6 +250,8 @@ void GameMode::play()
 	checkWin();
 
 	_getch();
+
+	initMainMenu();
 }
 
 void GameMode::setPlayerChess(bool playerChessFlag)
