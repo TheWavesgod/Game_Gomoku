@@ -4,16 +4,6 @@ void AI::init(ChessBoard* board)
 {
 	this->board = board;
 
-	for (unsigned i = 0; i < board->getGradeSize(); ++i)
-	{
-		vector<int> temp;
-		for (unsigned j = 0; j < board->getGradeSize(); ++j)
-		{
-			temp.push_back(0);
-		}
-		this->scoreMap.push_back(temp);
-	}
-
 	AIChess = board->getPlayerChessKind() == CHESS_BLACK ? CHESS_WHITE : CHESS_BLACK;
 }
 
@@ -40,8 +30,6 @@ chessPos AI::AIThink()
 
 void AI::findBestMove(int& bestRow, int& bestCol)
 {
-	this->clearScoreMap();
-
 	int maxScore = -1;
 
 	bestRow = -1;
@@ -67,114 +55,389 @@ void AI::findBestMove(int& bestRow, int& bestCol)
 	}
 }
 
-void AI::clearScoreMap()
-{
-	for (auto i = scoreMap.begin(); i != scoreMap.end(); ++i)
-	{
-		for (auto j = i->begin(); j != i->end(); ++j)
-		{
-			*(j) = 0;
-		}
-	}
-}
-
 int AI::evaluateMove(int row, int col, chess_kind_t ai_chess_kind)
 {
 	int score = 0;
+	vector<int> pieces;
 
 	// Horizontal direction
-	for (int i = col - 4; i < col; ++i)
-	{
-		if (i >= 0 && i + 4 < board->getGradeSize())
-		{
-			int countAI = 0;
-			int countOpponent = 0;
+	int temp = horizontalEvaluate(row, col, ai_chess_kind);
+	score = temp > score ? temp : score;
 
-			for (int j = i; j < i + 5; ++j)
-			{
- 				if (board->getChessData(row, j) == ai_chess_kind)
-				{
-					++countAI;
-				}
-				else if (board->getChessData(row, j) != 0)
-				{
-					++countOpponent;
-				}
-			}
+	// vertical direction
+	temp = verticalEvaluate(row, col, ai_chess_kind);
+	score = temp > score ? temp : score;
 
-			addScore(countAI, countOpponent, score);
-		}
-	}
+	// Diagonal direction forward
+	temp = diagonalEvaluateFrwd(row, col, ai_chess_kind);
+	score = temp > score ? temp : score;
 
-	// Vertical direction
-	for (int i = row - 4; i < row; ++i)
-	{
-		if (i >= 0 && i + 4 < board->getGradeSize())
-		{
-			int countAI = 0;
-			int countOpponent = 0;
-
-			for (int j = i; j < i + 5; ++j)
-			{
-				if (board->getChessData(j, col) == ai_chess_kind)
-				{
-					++countAI;
-				}
-				else if (board->getChessData(j, col) != 0)
-				{
-					++countOpponent;
-				}
-			}
-
-			addScore(countAI, countOpponent, score);
-		}
-	}
-
-	// Diagonal direction 
-	for (int i = 4; i > 0; --i)
-	{
-		if (row - i >= 0 && col - i >= 0 && row - i + 4 < board->getGradeSize() && col - i + 4 < board->getGradeSize())
-		{
-			int countAI = 0;
-			int countOpponent = 0;
-
-			for (int j = 0; j < 5; ++j)
-			{
-				if (board->getChessData(row - i + j, col - i + j) == ai_chess_kind)
-				{
-					++countAI;
-				}
-				else if (board->getChessData(row - i + j, col - i + j) != 0)
-				{
-					++countOpponent;
-				}
-			}
-
-			addScore(countAI, countOpponent, score);
-		}
-	}
+	// Diagonal direction backward
+	temp = diagonalEvaluateBkwd(row, col, ai_chess_kind);
+	score = temp > score ? temp : score;
 
 	return score;
 }
 
-void AI::addScore(int countAI, int countOpponent, int& score)
+inline int AI::horizontalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
 {
-	if (countAI == 5) {
-		score += 10000; // 五子连珠，胜利
+	int oppocount = 0;
+	int count = 0;
+	int left = 0;
+	int right = 0;
+
+	// Horizontal direction
+	// left
+	for (int i = col - 1; i >= 0; --i)
+	{
+		const int& temp = board->getChessData(row, i);
+		if (temp == ai_chess_kind)
+		{
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++left;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount;
+			}
+			else
+			{
+				break;
+			}
+		}
 	}
-	else if (countAI == 4 && countOpponent == 0) {
-		score += 1000; // 活四
+	// right
+	for (int i = col + 1; i < board->getGradeSize(); ++i)
+	{
+		const int& temp = board->getChessData(row, i);
+		if (temp == ai_chess_kind)
+		{
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++right;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount;
+			}
+			else
+			{
+				break;
+			}
+		}
 	}
-	else if (countAI == 3 && countOpponent == 0) {
-		score += 100; // 活三
-	}
-	else if (countAI == 2 && countOpponent == 0) {
-		score += 10; // 活二
-	}
-	else if (countAI == 1 && countOpponent == 0) {
-		score += 1; // 活一
-	}
-	else if (countOpponent == 4 && countAI == 0) {
-		score += 500; // 冲四，防守
-	}
+
+	return calculateScore(oppocount, count, left, right);
 }
+
+int AI::verticalEvaluate(int row, int col, chess_kind_t ai_chess_kind)
+{
+	int oppocount1 = 0;
+	int oppocount2 = 0;
+	int count = 0;
+	int left = 0;
+	int right = 0;
+
+	// vertical direction
+	// up
+	for (int i = row - 1; i >= 0; --i)
+	{
+		const int& temp = board->getChessData(i, col);
+		if (temp == ai_chess_kind)
+		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++left;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount1;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	// down
+	for (int i = row + 1; i < board->getGradeSize(); ++i)
+	{
+		const int& temp = board->getChessData(i, col);
+		if (temp == ai_chess_kind)
+		{
+			if (oppocount2 != 0)
+			{
+				break;
+			}
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++right;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount2;
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+
+	return calculateScore(oppocount1 + oppocount2, count, left, right);
+}
+
+int AI::diagonalEvaluateFrwd(int row, int col, chess_kind_t ai_chess_kind)
+{
+	int oppocount1 = 0;
+	int oppocount2 = 0;
+	int count = 0;
+	int left = 0;
+	int right = 0;
+
+	// diagonal direction forward
+	// up
+	int i = row;
+	int j = col;
+	while (i >= 0 && j >= 0)
+	{
+		const int& temp = board->getChessData(i, j);
+		if (temp == ai_chess_kind)
+		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++left;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount1;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		--i;
+		--j;
+	}
+
+	//down
+	i = row;
+	j = col;
+	while (i < board->getGradeSize() && j < board->getGradeSize())
+	{
+		const int& temp = board->getChessData(i, j);
+		if (temp == ai_chess_kind)
+		{
+			if (oppocount2 != 0)
+			{
+				break;
+			}
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++left;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount2;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		++i;
+		++j;
+	}
+
+	return calculateScore(oppocount1 + oppocount2, count, left, right);
+}
+
+int AI::diagonalEvaluateBkwd(int row, int col, chess_kind_t ai_chess_kind)
+{
+	int oppocount1 = 0;
+	int oppocount2 = 0;
+	int count = 0;
+	int left = 0;
+	int right = 0;
+
+	// diagonal direction backward
+	// up
+	int i = row;
+	int j = col;
+	while (i >= 0 && j < board->getGradeSize())
+	{
+		const int& temp = board->getChessData(i, j);
+		if (temp == ai_chess_kind)
+		{
+			if (oppocount1 != 0)
+			{
+				break;
+			}
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++left;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount1;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		--i;
+		++j;
+	}
+
+	//down
+	i = row;
+	j = col;
+	while (i < board->getGradeSize() && j >= 0)
+	{
+		const int& temp = board->getChessData(i, j);
+		if (temp == ai_chess_kind)
+		{
+			if (oppocount2 != 0)
+			{
+				break;
+			}
+			++count;
+			if (count >= 4)
+			{
+				break;
+			}
+		}
+		else if (temp == 0)
+		{
+			++left;
+			break;
+		}
+		else
+		{
+			if (count == 0)
+			{
+				++oppocount2;
+			}
+			else
+			{
+				break;
+			}
+		}
+
+		++i;
+		--j;
+	}
+
+	return calculateScore(oppocount1 + oppocount2, count, left, right);
+}
+
+int AI::calculateScore(int oppocount, int count, int left, int right)
+{
+	int score = 0;
+	if (count > 1)
+	{
+		if (left == 1 && right == 1)
+		{
+			int temp = tenNpower(count);
+			score = temp > score ? temp : score;
+		}
+		else if (left == 1 || right == 1)
+		{
+			int temp = tenNpower(count - 1);
+			score = temp > score ? temp : score;
+		}
+	}
+
+	int temp = tenNpower(oppocount) - 1;
+	score = temp > score ? temp : score;
+
+	return score;
+}
+
+int AI::tenNpower(int n)
+{
+	int x = 1;
+	for (int i = 0; i < n; ++i)
+	{
+		x *= 10;
+	}
+	return x;
+}
+
