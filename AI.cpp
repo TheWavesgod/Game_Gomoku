@@ -263,8 +263,8 @@ int AI::diagonalEvaluateFrwd(int row, int col, chess_kind_t ai_chess_kind)
 
 	// diagonal direction forward
 	// up
-	int i = row;
-	int j = col;
+	int i = row-1;
+	int j = col-1;
 	while (i >= 0 && j >= 0)
 	{
 		const int& temp = board->getChessData(i, j);
@@ -300,14 +300,13 @@ int AI::diagonalEvaluateFrwd(int row, int col, chess_kind_t ai_chess_kind)
 				break;
 			}
 		}
-
 		--i;
 		--j;
 	}
 
 	//down
-	i = row;
-	j = col;
+	i = row+1;
+	j = col+1;
 	while (i < board->getGradeSize() && j < board->getGradeSize())
 	{
 		const int& temp = board->getChessData(i, j);
@@ -361,8 +360,8 @@ int AI::diagonalEvaluateBkwd(int row, int col, chess_kind_t ai_chess_kind)
 
 	// diagonal direction backward
 	// up
-	int i = row;
-	int j = col;
+	int i = row - 1;
+	int j = col + 1;
 	while (i >= 0 && j < board->getGradeSize())
 	{
 		const int& temp = board->getChessData(i, j);
@@ -404,8 +403,8 @@ int AI::diagonalEvaluateBkwd(int row, int col, chess_kind_t ai_chess_kind)
 	}
 
 	//down
-	i = row;
-	j = col;
+	i = row + 1;
+	j = col - 1;
 	while (i < board->getGradeSize() && j >= 0)
 	{
 		const int& temp = board->getChessData(i, j);
@@ -466,7 +465,7 @@ int AI::calculateScore(int oppocount, int count, int left, int right)
 		}
 	}
 
-	int temp = tenNpower(oppocount+1);
+	int temp = tenNpower(oppocount)+1;
 	score = temp > score ? temp : score;
 
 	return score;

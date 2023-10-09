@@ -1,14 +1,15 @@
 d:\cppproject\game_gomoku\x64\debug\vc143.pdb
 d:\cppproject\game_gomoku\x64\debug\vc143.idb
 d:\cppproject\game_gomoku\x64\debug\main.obj
-d:\cppproject\game_gomoku\x64\debug\chessboard.obj
 d:\cppproject\game_gomoku\x64\debug\player.obj
 d:\cppproject\game_gomoku\x64\debug\gamemode.obj
+d:\cppproject\game_gomoku\x64\debug\chessboard.obj
 d:\cppproject\game_gomoku\x64\debug\ai.obj
 d:\cppproject\game_gomoku\x64\debug\game_gomoku.exe
 d:\cppproject\game_gomoku\x64\debug\game_gomoku.ilk
 d:\cppproject\game_gomoku\x64\debug\game_gomoku.pdb
-d:\cppproject\game_gomoku\x64\debug\chessboard.obj.enc
+d:\cppproject\game_gomoku\x64\debug\ai.obj.enc
+d:\cppproject\game_gomoku\x64\debug\gamemode.obj.enc
 d:\cppproject\game_gomoku\x64\debug\game_gomoku.tlog\cl.command.1.tlog
 d:\cppproject\game_gomoku\x64\debug\game_gomoku.tlog\cl.items.tlog
 d:\cppproject\game_gomoku\x64\debug\game_gomoku.tlog\cl.read.1.tlog

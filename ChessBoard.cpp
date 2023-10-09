@@ -160,10 +160,10 @@ bool ChessBoard::checkOver(chessPos lastMovePos, chess_kind_t lastMoveKind)
 				countNum = 0;
 			}
 		}
-	}
-	if (countNum == 5) 
-	{
-		return true;
+		if (countNum == 5)
+		{
+			return true;
+		}
 	}
 
 	// Vertical check
