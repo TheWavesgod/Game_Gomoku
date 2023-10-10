@@ -53,10 +53,13 @@ public:
 
 	chess_kind_t getPlayerChessKind();
 
+	IMAGE* getChessBoardImg();
+
 public:
 	ChessBoard(int gradeSize, int marginX, int marginY, float chessSize);
 
 private:
+	IMAGE chessBoardImg;
 	IMAGE chessBlackImg;
 	IMAGE chessWhiteImg;
 

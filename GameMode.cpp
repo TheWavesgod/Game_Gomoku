@@ -29,6 +29,11 @@ GameMode::GameMode(Player* C_player, AI* C_ai, ChessBoard* C_chessBoard)
 	loadimage(&GameWinImg,"Resources/success.png" );
 	loadimage(&GameLoseImg, "Resources/fail.png");
 
+	loadimage(&Blink, "Resources/blink.png", 53, 54, true);
+
+	loadimage(&AgainImg, "Resources/again.png", 179, 101, true);
+	loadimage(&returnMainMenuImg, "Resources/returnMainMenu.png", 322, 80, true);
+
 	// background music
 	mciSendString("play Resources/bgm.mp3 repeat", 0, 0, 0);
 
@@ -64,6 +69,14 @@ int GameMode::mainMenu()
 				Sleep(500);
 				return 0;
 			}
+			if (isMouseOnBlackChess(msg.x, msg.y) == true)
+			{
+				setPlayerChessBlack();
+			}
+			if (isMouseOnWhiteChess(msg.x, msg.y) == true)
+			{
+				setPlayerChessWhite();
+			}
 			break;
 		}
 	}
@@ -77,6 +90,8 @@ void GameMode::initMainMenu()
 	putimage(0, 0, &mainMenuImg);
 	putImagePNG(70, 550, &startGameImg);
 	putImagePNG(70, 750, &gameOverImg);
+	setPlayerChess(true);
+	putImagePNG(781, 200, &Blink);
 }
 
 void GameMode::checkWin()
@@ -184,6 +199,38 @@ bool GameMode::isMouseOnGameOver(int x, int y)
 	return false;
 }
 
+bool GameMode::isMouseOnBlackChess(int x, int y)
+{
+	if (x > 781 && x < 834 && y>200 && y < 254)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool GameMode::isMouseOnWhiteChess(int x, int y)
+{
+	if (x > 897 && x < 950 && y>200 && y < 254)
+	{
+		return true;
+	}
+	return false;
+}
+
+void GameMode::setPlayerChessBlack()
+{
+	putimage(897, 200, 53, 54, &mainMenuImg, 897, 200);
+	setPlayerChess(true);
+	putImagePNG(781, 200, &Blink);
+}
+
+void GameMode::setPlayerChessWhite()
+{
+	putimage(781, 200, 53, 54, &mainMenuImg, 781, 200);
+	setPlayerChess(false);
+	putImagePNG(897, 200, &Blink);
+}
+
 void GameMode::changeStartGameImageStation(bool Flag)
 {
 	if (Flag == true)
@@ -212,10 +259,120 @@ void GameMode::changeGameOverImageStation(bool Flag)
 	}
 }
 
+int GameMode::gameOver()
+{
+	putImagePNG(239, 194, &AgainImg);
+	putImagePNG(546, 197, &returnMainMenuImg);
+
+	MOUSEMSG msg;
+	bool againFlag = true;
+	bool returnFlag = true;
+
+	while (1)
+	{
+		msg = GetMouseMsg();
+		switch (msg.uMsg)
+		{
+		case WM_MOUSEMOVE:
+			mouseMoveOverMenu(msg, againFlag, returnFlag);
+			break;
+
+		case WM_LBUTTONDOWN:
+			if (isMouseOnAgain(msg.x, msg.y) == true)
+			{
+				mciSendString("play Resources/btn.wav", 0, 0, 0);
+				Sleep(500);
+				play();
+			}
+			if (isMouseOnReturn(msg.x, msg.y) == true)
+			{
+				mciSendString("play Resources/btn.wav", 0, 0, 0);
+				Sleep(500);
+				return 0;
+			}
+			break;
+		}
+	}
+}
+
+void GameMode::mouseMoveOverMenu(MOUSEMSG& msg, bool& againFlag, bool& returnFlag)
+{
+	if (isMouseOnAgain(msg.x, msg.y) == true)
+	{
+		if (againFlag == true)
+		{
+			changeStartGameImageStation(againFlag);
+			againFlag = false;
+		}
+	}
+	else
+	{
+		if (againFlag == false)
+		{
+			changeStartGameImageStation(againFlag);
+			againFlag = true;
+		}
+	}
+
+	if (isMouseOnReturn(msg.x, msg.y) == true)
+	{
+		if (returnFlag == true)
+		{
+			changeGameOverImageStation(returnFlag);
+			returnFlag = false;
+		}
+	}
+	else
+	{
+		if (returnFlag == false)
+		{
+			changeGameOverImageStation(returnFlag);
+			returnFlag = true;
+		}
+	}
+}
+
+bool GameMode::isMouseOnAgain(int x, int y)
+{
+	if (x > 239 && x < 411 && y > 194 && y < 295)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool GameMode::isMouseOnReturn(int x, int y)
+{
+	if (x > 546 && x < 868 && y > 197 && y < 277)
+	{
+		return true;
+	}
+	return false;
+}
+
+void GameMode::changeAgainImageStation(bool Flag)
+{
+	IMAGE* chessboard = chessBoard->getChessBoardImg();
+	if (Flag == true)
+	{
+		putimage(239, 194, 179, 101, chessboard, 239, 194);
+		putImagePNG(40, 740, &AgainImg);
+	}
+	else
+	{
+		putimage(239, 194, 179, 101, chessboard, 239, 194);
+		putImagePNG(70, 750, &AgainImg);
+	}
+
+}
+
+void GameMode::changeReturnImageStation(bool Flag)
+{
+
+}
+
 void GameMode::play()
 {
-	setPlayerChess(true);
-
 	chessBoard->init_ChessBoard(playerFlag);
 
 	player->init(this->chessBoard);
@@ -249,7 +406,7 @@ void GameMode::play()
 
 	checkWin();
 
-	_getch();
+	gameOver();
 
 	initMainMenu();
 }

@@ -28,7 +28,8 @@ ChessBoard::ChessBoard(int gradeSize, int marginX, int marginY, float chessSize)
 void ChessBoard::init_ChessBoard(bool playerFlag)
 {
 	Resize(NULL, 1024, 1024);
-	loadimage(NULL, "Resources/chessboard.png",1024,1024,true);
+	loadimage(&chessBoardImg, "Resources/chessboard.png",1024,1024,true);
+	putimage(0, 0, &chessBoardImg);
 
 	//mciSendString("play Resources/chq.mp3", 0, 0, 0);
 
@@ -246,6 +247,11 @@ void ChessBoard::chessBoardClear()
 chess_kind_t ChessBoard::getPlayerChessKind()
 {
 	return this->playerFlag? CHESS_BLACK : CHESS_WHITE;
+}
+
+IMAGE* ChessBoard::getChessBoardImg()
+{
+	return &chessBoardImg;
 }
 
 PixCdnt ChessBoard::getPixCdnt(chessPos* pos)

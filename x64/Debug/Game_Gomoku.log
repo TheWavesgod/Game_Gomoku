@@ -1,23 +1,4 @@
-﻿  AI.cpp
-D:\CppProject\Game_Gomoku\AI.cpp(40,29): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\AI.cpp(42,30): warning C4018: “<”: 有符号/无符号不匹配
-  ChessBoard.cpp
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(17,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(20,26): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(45,13): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(46,13): warning C4244: “初始化”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(48,13): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(56,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(68,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(80,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(92,13): warning C4244: “=”: 从“double”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(237,25): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(239,26): warning C4018: “<”: 有符号/无符号不匹配
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(255,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(256,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(265,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-D:\CppProject\Game_Gomoku\ChessBoard.cpp(266,20): warning C4244: “=”: 从“float”转换到“int”，可能丢失数据
-  GameMode.cpp
+﻿  GameMode.cpp
 D:\CppProject\Game_Gomoku\GameMode.cpp(21,16): warning C4305: “初始化”: 从“double”到“float”截断
 D:\CppProject\Game_Gomoku\GameMode.cpp(22,65): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
 D:\CppProject\Game_Gomoku\GameMode.cpp(22,56): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
@@ -28,7 +9,6 @@ D:\CppProject\Game_Gomoku\GameMode.cpp(26,68): warning C4244: “参数”: 从�
 D:\CppProject\Game_Gomoku\GameMode.cpp(26,59): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
 D:\CppProject\Game_Gomoku\GameMode.cpp(27,66): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
 D:\CppProject\Game_Gomoku\GameMode.cpp(27,57): warning C4244: “参数”: 从“float”转换到“int”，可能丢失数据
-  Player.cpp
   main.cpp
 D:\CppProject\Game_Gomoku\main.cpp(9,44): warning C4305: “参数”: 从“double”到“float”截断
   正在生成代码...

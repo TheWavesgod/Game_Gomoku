@@ -32,6 +32,11 @@ private:
 	IMAGE GameWinImg;
 	IMAGE GameLoseImg;
 
+	IMAGE Blink;
+
+	IMAGE AgainImg;
+	IMAGE returnMainMenuImg;
+
 	// Indicate what chess kind player choose. true reps black, false reps white.
 	bool playerFlag;
 	// Indicate who the chess player is now. true reps player, false reps ai.
@@ -48,7 +53,22 @@ private:
 	bool isMouseOnStartGame(int x, int y);
 	bool isMouseOnGameOver(int x, int y);
 
+	bool isMouseOnBlackChess(int x, int y);
+	bool isMouseOnWhiteChess(int x, int y);
+
+	void setPlayerChessBlack();
+	void setPlayerChessWhite();
+
 	void changeStartGameImageStation(bool Flag);
 	void changeGameOverImageStation(bool Flag);
+
+	int gameOver();
+	void mouseMoveOverMenu(MOUSEMSG& msg, bool& againFlag, bool& returnFlag);
+
+	bool isMouseOnAgain(int x, int y);
+	bool isMouseOnReturn(int x, int y);
+
+	void changeAgainImageStation(bool Flag);
+	void changeReturnImageStation(bool Flag);
 };
 
