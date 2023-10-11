@@ -34,6 +34,9 @@ GameMode::GameMode(Player* C_player, AI* C_ai, ChessBoard* C_chessBoard)
 	loadimage(&AgainImg, "Resources/again.png", 179, 101, true);
 	loadimage(&returnMainMenuImg, "Resources/returnMainMenu.png", 322, 80, true);
 
+	loadimage(&AgainMagImg, "Resources/again.png", 211, 120, true);
+	loadimage(&returnMainMenuMagImg, "Resources/returnMainMenu.png", 380, 94, true);
+
 	// background music
 	mciSendString("play Resources/bgm.mp3 repeat", 0, 0, 0);
 
@@ -301,7 +304,7 @@ void GameMode::mouseMoveOverMenu(MOUSEMSG& msg, bool& againFlag, bool& returnFla
 	{
 		if (againFlag == true)
 		{
-			changeStartGameImageStation(againFlag);
+			changeAgainImageStation(againFlag);
 			againFlag = false;
 		}
 	}
@@ -309,7 +312,7 @@ void GameMode::mouseMoveOverMenu(MOUSEMSG& msg, bool& againFlag, bool& returnFla
 	{
 		if (againFlag == false)
 		{
-			changeStartGameImageStation(againFlag);
+			changeAgainImageStation(againFlag);
 			againFlag = true;
 		}
 	}
@@ -318,7 +321,7 @@ void GameMode::mouseMoveOverMenu(MOUSEMSG& msg, bool& againFlag, bool& returnFla
 	{
 		if (returnFlag == true)
 		{
-			changeGameOverImageStation(returnFlag);
+			changeReturnImageStation(returnFlag);
 			returnFlag = false;
 		}
 	}
@@ -326,7 +329,7 @@ void GameMode::mouseMoveOverMenu(MOUSEMSG& msg, bool& againFlag, bool& returnFla
 	{
 		if (returnFlag == false)
 		{
-			changeGameOverImageStation(returnFlag);
+			changeReturnImageStation(returnFlag);
 			returnFlag = true;
 		}
 	}
@@ -356,18 +359,28 @@ void GameMode::changeAgainImageStation(bool Flag)
 	if (Flag == true)
 	{
 		putimage(239, 194, 179, 101, chessboard, 239, 194);
-		putImagePNG(40, 740, &AgainImg);
+		putImagePNG(223, 185, &AgainMagImg); 
 	}
 	else
 	{
-		putimage(239, 194, 179, 101, chessboard, 239, 194);
-		putImagePNG(70, 750, &AgainImg);
+		putimage(223, 185, 211, 120, chessboard, 223, 185);
+		putImagePNG(239, 194, &AgainImg);
 	}
-
 }
 
 void GameMode::changeReturnImageStation(bool Flag)
 {
+	IMAGE* chessboard = chessBoard->getChessBoardImg();
+	if (Flag == true)
+	{
+		putimage(546, 197, 322, 80, chessboard, 546, 197);
+		putImagePNG(517, 190, &returnMainMenuMagImg);
+	}
+	else
+	{
+		putimage(517, 190, 380, 94, chessboard, 517, 190);
+		putImagePNG(546, 197, &returnMainMenuImg);
+	}
 
 }
 

@@ -23,6 +23,7 @@ private:
 	ChessBoard* chessBoard;
 
 	IMAGE mainMenuImg;
+
 	IMAGE startGameImg;
 	IMAGE gameOverImg;
 
@@ -36,6 +37,9 @@ private:
 
 	IMAGE AgainImg;
 	IMAGE returnMainMenuImg;
+
+	IMAGE AgainMagImg;
+	IMAGE returnMainMenuMagImg;
 
 	// Indicate what chess kind player choose. true reps black, false reps white.
 	bool playerFlag;
